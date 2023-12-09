@@ -3,8 +3,9 @@ using namespace std;
 
 int main()
 {
-
-
+    cout << "C867: Scripting and Programming - Applications \n";
+    cout << "Language Used: C++ \n";
+    cout << "Jacob Petrakovitz (Student ID: 010616446) \n";
 
     const string studentData[] = {
     "A1,John,Smith,John1989@gmail.com,20,30,35,40,SECURITY",
