@@ -1,4 +1,7 @@
 #include <iostream>
+
+#include "student.h"
+
 using namespace std;
 
 int main()
@@ -15,7 +18,6 @@ int main()
     "A5,Jacob,Petrakovitz,jpetrak@wgu.edu,34, 10,20,30 ,SOFTWARE"
     };
 }
-
 
 
 

@@ -20,8 +20,10 @@ class Student{
 
 	public:
 
-		// Initialize the constructor
+		// Initialize default constructor
 		Student();
+		// Initalize parameter constructor
+		Student(string studentID, string firstName, string lastName, string emailAddress, int age, int daysToCompleteCourse1, int daysToCompleteCourse2, int daysToCompleteCourse3, DegreeProgram degreeProgram);
 
 		// Setters - for each variable established in student.h
 		void setStudentID(string studentID);
@@ -42,6 +44,9 @@ class Student{
 		int* getDaysToCompletion();
 		DegreeProgram getDegreeProgram();
 
+
+		// Establish print function 
+		void print();
 };
 
 

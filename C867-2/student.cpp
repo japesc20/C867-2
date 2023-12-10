@@ -19,6 +19,17 @@ Student::Student() {
 
 }
 
+// Constructor to set each parameter variable
+Student::Student(string studentID, string firstName, string lastName, string emailAddress, int age, int daysToCompleteCourse1, int daysToCompleteCourse2, int daysToCompleteCourse3, DegreeProgram degreeProgram) {
+	setStudentID(studentID);
+	setFirstName(firstName);
+	setLastName(lastName);
+	setEmailAddress(emailAddress);
+	setAge(age);
+	setDaysToCompletion(daysToCompleteCourse1, daysToCompleteCourse2, daysToCompleteCourse3);
+	setDegreeProgram(degreeProgram);
+}
+
 
 // Getters - logic
 string Student::getStudentID() {
@@ -83,4 +94,10 @@ void Student::setDaysToCompletion(int daysToCompleteCourse1, int daysToCompleteC
 
 void Student::setDegreeProgram(DegreeProgram degreeProgram) {
 	this->degreeProgram = degreeProgram;
+};
+
+
+// Logic for print function
+void Student::print() {
+	
 };
