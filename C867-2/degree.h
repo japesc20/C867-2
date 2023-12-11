@@ -1,3 +1,5 @@
+#ifndef DEGREE_H
+#define DEGREE_H
 #pragma once
 
 enum DegreeProgram {
@@ -5,3 +7,5 @@ enum DegreeProgram {
 	NETWORK, 
 	SOFTWARE
 };
+
+#endif // !DEGREE_H

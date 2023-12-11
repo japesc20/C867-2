@@ -97,7 +97,23 @@ void Student::setDegreeProgram(DegreeProgram degreeProgram) {
 };
 
 
-// Logic for print function
-void Student::print() {
-	
-};
+// Logic for print functions
+void Student::printHeader()
+{
+	cout << "Student ID |First Name |Last Name  |Email   |Age  | Days in Course  |Degree Program\n";
+}
+
+void Student::print()
+{
+	cout << this->getStudentID() << '\t',
+		cout << this->getFirstName() << '\t',
+		cout << this->getLastName() << '\t',
+		cout << this->getEmailAddress() << '\t',
+		cout << this->getAge() << '\t',
+		cout << this->getDaysToCompletion() << '\t';
+	cout << this->getDegreeProgram() << '\n';
+}
+
+
+// Calling the destructor ~Student() 
+Student::~Student() {};
