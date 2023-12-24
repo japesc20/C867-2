@@ -1,68 +1,52 @@
-using namespace std; 
 #include <iostream>
-
 #include "student.h"
 
+using namespace std;
 
 
-// Default Constructor - Setting variables to empty strings or 0
-Student::Student() {
-	this->studentID = "";
-	this->firstName = "";
-	this->lastName = "";
-	this->emailAddress = "";
-	this->age = 0;
-	this->daysToCompletion[0] = 0;
-	this->daysToCompletion[1] = 0;
-	this->daysToCompletion[2] = 0;
-	this->degreeProgram;
 
-}
+Student::Student(
+	std::string studentID,
+	std::string firstName,
+	std::string lastName,
+	std::string emailAddress,
+	int age,
+	int daysToCompletion[numberOfClasses],
+	DegreeProgram degreeProgram) {
 
-// Constructor to set each parameter variable
-Student::Student(string studentID, string firstName, string lastName, string emailAddress, int age, int daysToCompleteCourse1, int daysToCompleteCourse2, int daysToCompleteCourse3, DegreeProgram degreeProgram) {
-	setStudentID(studentID);
-	setFirstName(firstName);
-	setLastName(lastName);
-	setEmailAddress(emailAddress);
-	setAge(age);
-	setDaysToCompletion(daysToCompleteCourse1, daysToCompleteCourse2, daysToCompleteCourse3);
-	setDegreeProgram(degreeProgram);
-}
+};
 
-
-// Getters - logic
+// Getters (Accessors)
 string Student::getStudentID() {
-	return studentID;
+	return this->studentID;
 };
 
 string Student::getFirstName() {
-	return firstName;
+	return this->firstName;
 };
 
 string Student::getLastName() {
-	return lastName;
+	return this->lastName;
 };
 
 string Student::getEmailAddress() {
-	return emailAddress;
+	return this->emailAddress;
 };
 
 int Student::getAge() {
-	return age;
+	return this->age;
 };
 
 int* Student::getDaysToCompletion() {
-	return daysToCompletion;
+	return this->daysToCompletion;
 };
 
 DegreeProgram Student::getDegreeProgram() {
-	return degreeProgram;
+	return this->degreeProgram;
 };
 
 
-// Setters - logic
-
+// Setters (Mutators)
 void Student::setStudentID(string studentID) {
 	this->studentID = studentID;
 };
@@ -83,37 +67,40 @@ void Student::setAge(int age) {
 	this->age = age;
 };
 
-void Student::setDaysToCompletion(int daysToCompleteCourse1, int daysToCompleteCourse2, int daysToCompleteCourse3) {
-	// For loop to iterate through daysToCompletion array to set members
-	for (int i = 0; i < 3; i++) {
-		this->daysToCompletion[0] = daysToCompleteCourse1;
-		this->daysToCompletion[1] = daysToCompleteCourse2;
-		this->daysToCompletion[2] = daysToCompleteCourse3;
+void Student::setDaysToCompletion(int daysToCompletion[]) {
+	// For loop, loops through the daysToCompletion array and sets each member
+	for (int i = 0; i < numberOfClasses; ++i) {
+		this->daysToCompletion[i] = daysToCompletion[i];
 	};
 };
 
 void Student::setDegreeProgram(DegreeProgram degreeProgram) {
 	this->degreeProgram = degreeProgram;
+}; 
+
+
+// Converting enumerator members to strings
+inline const char* Student::degreeToString(DegreeProgram degreeProgram) {
+	switch (degreeProgram) {
+	case SECURITY:		return "SECURITY";
+	case NETWORK:		return "NETWORK";
+	case SOFTWARE:		return "SOFTWARE";
+	default:			return "NA";
+	};
 };
 
 
-// Logic for print functions
-void Student::printHeader()
-{
-	cout << "Student ID |First Name |Last Name  |Email   |Age  | Days in Course  |Degree Program\n";
-}
 
-void Student::print()
-{
-	cout << this->getStudentID() << '\t',
-		cout << this->getFirstName() << '\t',
-		cout << this->getLastName() << '\t',
-		cout << this->getEmailAddress() << '\t',
-		cout << this->getAge() << '\t',
-		cout << this->getDaysToCompletion() << '\t';
-	cout << this->getDegreeProgram() << '\n';
+void Student::print() {
+	cout << this->getStudentID() << "\t"
+		<< this->getFirstName() << "\t"
+		<< this->getLastName() << " "
+		<< this->getEmailAddress() << "\t"
+		<< this->getAge() << "\t"
+		<< daysToCompletion[0] << ", "
+		<< daysToCompletion[1] << ", " 
+		<< daysToCompletion[2] << "\t"
+		<< degreeToString(degreeProgram) << "\n";
 }
 
 
-// Calling the destructor ~Student() 
-Student::~Student() {};

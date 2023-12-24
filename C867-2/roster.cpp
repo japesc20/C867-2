@@ -1,122 +1,90 @@
-using namespace std;
-
 #include <iostream>
-#include "student.h"
+#include <sstream>
 #include "roster.h"
+#include "student.h"
 #include "degree.h"
 
-
-// Calling Roster constructor
-Roster::Roster(int rosterSize) {
-	this->rosterSize = rosterSize;
-	this->index = 0;
-
-	// For loop through each object (student) then creating a new student object
-	for (int i = 0; i < rosterSize; i++) {
-		this->classRosterArray[i] = new Student;
-	}
-	return;
-}
+using namespace std;
 
 
-// Pointer of pointers returning student data
-Student** Roster::getAllStudents()
-{
-	return Roster::classRosterArray;
-}
+// Establishing classRosterArray = array of student pointers
+Student* classRosterArray[numberOfStudents];
 
 
+// Parse function - 
+void Roster::parse(string studentRow) {
+	string studentID, firstName, lastName, emailAddress,
+		ageString, daysToCompletion1String, daysToCompletion2String, daysToCompletion3String,
+		degreeProgram;
 
-//Calling parsing method - setting setters from StudentData
-void Roster::parseStudentData(string studentData) {
+	// Stringstream allows us to parse through and manipulate the data table of strings
+	stringstream student(studentRow);
 
-	string studentID, firstName, lastName, emailAddress;
-	int age, daysToCompleteCourse1, daysToCompleteCourse2, daysToCompleteCourse3;
+	// getline parameters read as follows (read input, write input to variable name, '' stop reading where)
+	getline(student, studentID, ',');
+	getline(student, firstName, ',');
+	getline(student, lastName, ',');
+	getline(student, emailAddress, ',');
+	getline(student, ageString, ',');
+	getline(student, daysToCompletion1String, ',');
+	getline(student, daysToCompletion2String, ',');
+	getline(student, daysToCompletion3String, ',');
+	getline(student, degreeProgram, ',');
+	
+	// Calling degreeToString function to parse through degree enumerator
+	DegreeProgram degreeString = degreeToString(degreeProgram);
 
-	if (index < rosterSize) {
+	int age = stoi(ageString);
+	// Pulling from daysToCompletionStrings "stoi" converts string into an int
+	int daysToCompletion1 = stoi(daysToCompletion1String);
+	int daysToCompletion2 = stoi(daysToCompletion2String);
+	int daysToCompletion3 = stoi(daysToCompletion3String);
 
-		classRosterArray[index] = new Student();
+	// Adds all student data from parsing to the add function
+	add(studentID, firstName, lastName, emailAddress, age, daysToCompletion1, daysToCompletion2, daysToCompletion3, degreeString);
+};
 
-		int i = studentData.find(",");
-		studentID = studentData.substr(0, i);
-		classRosterArray[index]->setStudentID(studentID);
+// Setting degreeProgram enumerator members to its corresponding string literal
+DegreeProgram Roster::degreeToString(string degreeProgram) {
 
-		int j = i + 1;
-		i = studentData.find(",", j);
-		firstName = studentData.substr(j, i - j);
-		classRosterArray[index]->setFirstName(firstName);
-
-		j = i + 1;
-		i = studentData.find(",", j);
-		lastName = studentData.substr(j, i - j);
-		classRosterArray[index]->setLastName(lastName);
-
-		j = i + 1;
-		i = studentData.find(",", j);
-		emailAddress = studentData.substr(j, i - j);
-		classRosterArray[index]->setEmailAddress(emailAddress);
-
-		j = i + 1;
-		i = studentData.find(",", j);
-		age = stoi(studentData.substr(j, i - j));
-		classRosterArray[index]->setAge(age);
-
-		j = i + 1;
-		i = studentData.find(",", j);
-		daysToCompleteCourse1 = stoi(studentData.substr(j, i - j));
-
-		j = i + 1;
-		i = studentData.find(",", j);
-		daysToCompleteCourse2 = stoi(studentData.substr(j, i - j));
-
-		j = i + 1;
-		i = studentData.find(",", j);
-		daysToCompleteCourse3 = stoi(studentData.substr(j, i - j));
-
-		classRosterArray[index]->setDaysToCompletion(daysToCompleteCourse1, daysToCompleteCourse2, daysToCompleteCourse3);
-
-		j = i + 1;
-		i = studentData.find(",", j);
-		string type = studentData.substr(j, i - j);
-		if (type == "SOFTWARE") {
-			classRosterArray[index]->setDegreeProgram(SOFTWARE);
-		}
-		else if (type == "SECURITY") {
-			classRosterArray[index]->setDegreeProgram(SECURITY);
-		}
-		else if (type == "NETWORK") {
-			classRosterArray[index]->setDegreeProgram(NETWORK);
-		}
-		else {
-			cout << "Degree not set" << endl;
-		}
-		index++;
-	}
-	return;
-}
-
-
-// Adding student object function
-void Roster::add(
-	string studentID, 
-	string firstName, 
-	string lastName, 
-	string emailAddress, 
-	int age,
-	int daysToCompleteCourse1,
-	int daysToCompleteCourse2,
-	int daysToCompleteCourse3,
-	DegreeProgram degreeProgram) {
-
-	// Establishing each member inside array
-	int daysToCompletion[3] = { daysToCompleteCourse1, daysToCompleteCourse2, daysToCompleteCourse3 };
-
-	// Creating the new student object with parameters given
-	classRosterArray[rosterSize] = new Student(studentID, firstName, lastName, emailAddress, age, daysToCompleteCourse1, daysToCompleteCourse2, daysToCompleteCourse3, degreeProgram);
+	if (degreeProgram == "SECURITY") return SECURITY;
+	if (degreeProgram == "SOFTWARE") return SOFTWARE;
+	if (degreeProgram == "NETWORK") return NETWORK;
 };
 
 
+// Adding all student data to the classRosterArray
+void Roster::add(string studentID, string firstName, string lastName, string emailAddress,
+	int age, int daysToCompletion1, int daysToCompletion2, int daysToCompletion3, DegreeProgram degreeProgram) {
 
+	// Setting and adding daysToCompletion members to days array
+	int courseDays[numberOfClasses] = { daysToCompletion1, daysToCompletion2, daysToCompletion3 };
 
-// Calling Roster destructor
-Roster::~Roster() {};
+	/* For loop, loops through the classRosterArray, if member is defined as nullptr (memory address is absent from member)
+		it adds in the student row with its corresponding data*/
+	for (int i = 0; i < numberOfStudents; ++i) {
+		if (classRosterArray[i] == nullptr) {
+			classRosterArray[i] = new Student(studentID, firstName, lastName,
+				emailAddress, age, courseDays, degreeProgram);
+			return;
+		};
+	};
+};
+
+// Removing a student from classRosterArray by given studentID
+void Roster::remove(string studentID) {
+
+	bool studentRemoved = false;
+
+	for (int i = 0; i < numberOfStudents; ++i) {
+		if ((classRosterArray[i] != nullptr) && (classRosterArray[i]->getStudentID() == studentID)) {
+			delete classRosterArray[i];
+			classRosterArray[i] = nullptr;
+			studentRemoved = true;
+
+			cout << "STUDENT REMOVED: " << studentID;
+		} else {
+			cout << "ERROR: COULD NOT FIND STUDENT ID - " << studentID;
+		}
+	};
+};

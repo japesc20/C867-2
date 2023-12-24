@@ -1,60 +1,65 @@
 #ifndef STUDENT_H
-#define STUDENT_H
-#pragma once
 
-#include <string>
-#include <array>
+#pragma once
+#include <iostream>
 #include "degree.h"
 
 
-class Student{
+class Student {
+
+	static const int numberOfClasses = 3;
+
+private:
+	std::string studentID;
+	std::string firstName;
+	std::string lastName;
+	std::string emailAddress;
+	int age;
+	int daysToCompletion[numberOfClasses];
+	DegreeProgram degreeProgram;
+
+
+public:
+
+	// Constructor with all parameters from table
+	Student(
+		std::string studentID, 
+		std::string firstName, 
+		std::string lastName, 
+		std::string emailAddress, 
+		int age,
+		int daysToCompletion[numberOfClasses],
+		DegreeProgram degreeProgram
+		);
+	Student();
+	// Student Destructor
+	~Student();
+
+
+	// Initialzing Getters (Accessors)
+	std::string getStudentID();
+	std::string getFirstName();
+	std::string getLastName();
+	std::string getEmailAddress();
+	int getAge();
+	int *getDaysToCompletion();
+	DegreeProgram getDegreeProgram();
+
+	// Initializing Setters (Mutators)
+	void setStudentID(std::string studentID);
+	void setFirstName(std::string firstName);
+	void setLastName(std::string lastName);
+	void setEmailAddress(std::string emailAddress);
+	void setAge(int age);
+	void setDaysToCompletion(int daysToCompletion[numberOfClasses]);
+	void setDegreeProgram(DegreeProgram degreeProgram);
+
+
+	// Initializing functions
+	inline const char* degreeToString(DegreeProgram degreeProgram);
+	void print();
+
 	
-	// Setting private variables - encapsulation
-	private:
-		std::string studentID;
-		std::string firstName;
-		std::string lastName;
-		std::string emailAddress;
-		int age;
-		int daysToCompletion[3];
-		DegreeProgram degreeProgram;
-
-	public:
-
-		// Initialize default constructor
-		Student();
-		// Initalize parameter constructor
-		Student(std::string studentID, std::string firstName, std::string lastName, std::string emailAddress, int age, int daysToCompleteCourse1, int daysToCompleteCourse2, int daysToCompleteCourse3, DegreeProgram degreeProgram);
-		// Initialize destructor for Student object
-		~Student();
-		
-
-		// Setters - for each variable established in student.h
-		void setStudentID(std::string studentID);
-		void setFirstName(std::string firstName);
-		void setLastName(std::string lastName);
-		void setEmailAddress(std::string emailAddress);
-		void setAge(int age);
-		void setDaysToCompletion(int daysToCompleteCourse1, int daysToCompleteCourse2, int daysToCompleteCourse3);
-		void setDegreeProgram(DegreeProgram degreeProgram);
-
-		// Getters - ^^
-		std::string getStudentID();
-		std::string getFirstName();
-		std::string getLastName();
-		std::string getEmailAddress();
-		int getAge();
-		//* = Pointer
-		int* getDaysToCompletion();
-		DegreeProgram getDegreeProgram();
-
-
-		// Establish print function 
-		void print();
-		static void printHeader();
-
-
 };
 
-
-#endif // !STUDENT_H
+#endif // !"STUDENT_H" 

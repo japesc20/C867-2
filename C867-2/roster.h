@@ -1,45 +1,41 @@
 #ifndef ROSTER_H
-#define ROSTER_H
-#pragma once
 
+#pragma once
+#include <iostream>
 #include "student.h"
+
+
+// Global variable
+static const int numberOfStudents = 5;
+static const int numberOfClasses = 3;
 
 
 class Roster {
 
-	public:
+public:
 
-		int rosterSize;
-		int index;
+	// Array of pointers holding studentData
+	Student* classRosterArray[numberOfStudents];
 
-		// Initialize Roster constructor
-		Roster(int rosterSize);
-		Roster();
-		// Initialize Roster destructor
-		~Roster();
-
-		Student* classRosterArray[5];
-
-		void add(
-			std::string studentID,
-			std::string firstName,
-			std::string lastName,
-			std::string emailAddress,
-			int age,
-			int daysToCompleteCourse1,
-			int daysToCompleteCourse2,
-			int daysToCompleteCourse3,
-			DegreeProgram degreeprogram);
+	// Default constructor
+	Roster();
+	// Default destructor
+	~Roster();
 
 
+	// FUNCTIONS BEGIN HERE
 
-	// Pointer to studentData table
-	Student** getAllStudents();
+	// Parse function - parse studentData table to create each student object
+	void parse(std::string studentRow);
+	// Add function - contains all the studentData parameters and adds them to the classRosterArray
+	void add(std::string studentID, std::string firstName, std::string lastName,
+		std::string emailAddress, int age, int daysToCompletion1, int daysToCompletion2,
+		int daysToCompletion3, DegreeProgram degreeProgram);
+	static DegreeProgram degreeToString(std::string degreeProgram);
 
-	void parseStudentData(std::string student);
-
+	// Remove function - remove any student by given studentID
+	void remove(std::string studentID);
 };
-
 
 
 #endif // !ROSTER_H
