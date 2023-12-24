@@ -2,7 +2,6 @@
 #include <sstream>
 #include "roster.h"
 
-
 using namespace std;
 
 
@@ -83,24 +82,23 @@ void Roster::add(string studentID, string firstName, string lastName, string ema
 // Removing a student from classRosterArray by given studentID
 void Roster::remove(string studentID) {
 
-	bool studentRemoved = false;
+	bool studentFound = false;
 
-	/* Loop through studentData - if studentID matches remove - nested if statement if ID not found
-		- Nested if statement, used when a break out condition is needed */ 
+	/* Loop through studentData - if studentID matches remove 
+		of studentID not found - error message */ 
 	for (int i = 0; i < numberOfStudents; ++i) {
-		if ((classRosterArray[i] != nullptr) && 
+		if ((classRosterArray[i] != nullptr) &&
 			(classRosterArray[i]->getStudentID() == studentID)) {
 
 			delete classRosterArray[i];
 			classRosterArray[i] = nullptr;
-			studentRemoved = true;
+			studentFound = true;
 
-			cout << "STUDENT REMOVED: " << studentID;
-
-			if (!studentRemoved) {
-				cout << "ERROR: COULD NOT FIND STUDENT ID - " << studentID << endl;
-			};
+			cout << "STUDENT REMOVED: " << studentID << "\n" << endl;
 		};
+	};
+	if (!studentFound) {
+		cout << "ERROR: COULD NOT FIND STUDENT ID - " << studentID << endl;
 	};
 };
 
@@ -195,8 +193,13 @@ void Roster::printByDegreeProgram(DegreeProgram degreeProgram) {
 };
 
 
-// Default destructor
-Roster::~Roster() {};
+// Default destructor - sets all rows in classRosterArray back to nullptr
+Roster::~Roster() {
+	for (int i = 0; i < numberOfStudents; ++i) {
+		delete classRosterArray[i];
+		classRosterArray[i] = nullptr;
+	}
+};
 
 
 

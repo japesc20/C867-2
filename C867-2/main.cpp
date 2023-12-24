@@ -18,32 +18,39 @@ int main() {
 	cout << "Jacob Petrakovitz\n" << endl;
 
 
-	// Calling Roster and Student class
-	Roster roster;
+	// Creating an instance for classRoster and student
+	Roster classRoster;
 	Student student;
 
 	// Loop and parse through all studentData
 	for (string student : studentData) {
-		roster.parse(student);
+		classRoster.parse(student);
 	}
 
 
 	// --- FUNCTION CALLS --- \\
 	
 	// Prints all students
-	roster.printAll();
+	classRoster.printAll();
 
 	// Prints invalid emails in data table
-	roster.printInvalidEmails();
+	classRoster.printInvalidEmails();
 
-	// Average days in course
+	// Prints average days in course for each student
 	for (int i = 0; i < numberOfStudents; ++i) {
-		roster.printAverageDaysInCourse(roster.classRosterArray[i]->getStudentID());
+		classRoster.printAverageDaysInCourse(classRoster.classRosterArray[i]->getStudentID());
 	};
 	cout << endl;
 
-	// Print by degree 'Software'
-	roster.printByDegreeProgram(SOFTWARE);
+	// Prints by degree 'Software'
+	classRoster.printByDegreeProgram(SOFTWARE);
+
 	// Removes student A3
-	roster.remove("A3");
+	classRoster.remove("A3");
+
+	// Print all student after removing A3
+	classRoster.printAll();
+
+	// Attempting to remove student A3 again
+	classRoster.remove("A3");
 };

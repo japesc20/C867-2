@@ -100,7 +100,7 @@ inline const char* Student::degreeToString(DegreeProgram degreeProgram) {
 };
 
 
-
+// Print function prints each variable from getter
 void Student::print() {
 	cout << this->getStudentID() << "\t"
 		<< this->getFirstName() << "\t"
@@ -113,5 +113,5 @@ void Student::print() {
 		<< degreeToString(degreeProgram) << "\n";
 }
 
-
+// Default destructor
 Student::~Student() {};

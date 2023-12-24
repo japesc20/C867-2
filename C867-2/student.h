@@ -21,7 +21,7 @@ private:
 
 public:
 
-	// Constructor with all parameters from table
+	// Constructor with all parameters from student table
 	Student(
 		std::string studentID, 
 		std::string firstName, 
@@ -31,8 +31,10 @@ public:
 		int daysToCompletion[numberOfClasses],
 		DegreeProgram degreeProgram
 		);
+
+	// Default student constructor
 	Student();
-	// Student Destructor
+	// Default student Destructor
 	~Student();
 
 
@@ -56,7 +58,7 @@ public:
 
 
 	// Initializing functions
-	inline const char* degreeToString(DegreeProgram degreeProgram);
+	inline const char *degreeToString(DegreeProgram degreeProgram);
 	void print();
 
 	
