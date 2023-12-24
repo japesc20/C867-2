@@ -1,14 +1,21 @@
 #include <iostream>
 #include <sstream>
 #include "roster.h"
-#include "student.h"
-#include "degree.h"
+
 
 using namespace std;
 
 
 // Establishing classRosterArray = array of student pointers
 Student* classRosterArray[numberOfStudents];
+
+
+// Default constructor, initiates each student row as nullptr initially
+Roster::Roster() {
+	for (int i = 0; i < sizeof(classRosterArray) / sizeof(classRosterArray[0]); ++i) {
+		classRosterArray[i] = nullptr;
+	}
+}
 
 
 // Parse function - 
@@ -44,6 +51,7 @@ void Roster::parse(string studentRow) {
 	add(studentID, firstName, lastName, emailAddress, age, daysToCompletion1, daysToCompletion2, daysToCompletion3, degreeString);
 };
 
+
 // Setting degreeProgram enumerator members to its corresponding string literal
 DegreeProgram Roster::degreeToString(string degreeProgram) {
 
@@ -71,20 +79,124 @@ void Roster::add(string studentID, string firstName, string lastName, string ema
 	};
 };
 
+
 // Removing a student from classRosterArray by given studentID
 void Roster::remove(string studentID) {
 
 	bool studentRemoved = false;
 
+	/* Loop through studentData - if studentID matches remove - nested if statement if ID not found
+		- Nested if statement, used when a break out condition is needed */ 
 	for (int i = 0; i < numberOfStudents; ++i) {
-		if ((classRosterArray[i] != nullptr) && (classRosterArray[i]->getStudentID() == studentID)) {
+		if ((classRosterArray[i] != nullptr) && 
+			(classRosterArray[i]->getStudentID() == studentID)) {
+
 			delete classRosterArray[i];
 			classRosterArray[i] = nullptr;
 			studentRemoved = true;
 
 			cout << "STUDENT REMOVED: " << studentID;
-		} else {
-			cout << "ERROR: COULD NOT FIND STUDENT ID - " << studentID;
-		}
+
+			if (!studentRemoved) {
+				cout << "ERROR: COULD NOT FIND STUDENT ID - " << studentID << endl;
+			};
+		};
 	};
 };
+
+
+// Function prints all student data
+void Roster::printAll() {
+	cout << "Displaying all students: \n" << endl;
+	for (int i = 0; i < numberOfStudents; ++i) {
+		if (classRosterArray[i] != nullptr) {
+			classRosterArray[i]->print();
+		};
+	};
+	cout << endl;
+};
+
+
+// Function prints the average days a student is in a class
+void Roster::printAverageDaysInCourse(string studentID) {
+	for (int i = 0; i < numberOfStudents; ++i) {
+		if ((classRosterArray[i] != nullptr) && 
+			(classRosterArray[i]->getStudentID() == studentID)) {
+
+			int averageDaysInCourse;
+
+			// Finding the average days for each student 
+			averageDaysInCourse = (
+				classRosterArray[i]->getDaysToCompletion()[0] +
+				classRosterArray[i]->getDaysToCompletion()[1] +
+				classRosterArray[i]->getDaysToCompletion()[2]) / 3;
+
+			cout << "Student ID: " << studentID
+				<< ", average days in course is: " << averageDaysInCourse << "\n";
+		};
+	};
+};
+
+
+// Prints invalid emails from the student data table
+void Roster::printInvalidEmails() {
+
+	cout << "Displaying invalid emails: \n" << endl;
+
+	// Loops student table
+	for (int i = 0; i < numberOfStudents; ++i) {
+		string studentEmail = classRosterArray[i]->getEmailAddress();
+
+		/* npos = is not found
+			' ' != is double negative, if space found, invalid
+			'.' if period is missing, invalid 
+			'@' if @ is missing, invalid */
+
+		if ((studentEmail.find(' ') != string::npos) ||
+			(studentEmail.find('.') == string::npos) ||
+			(studentEmail.find('@') == string::npos)) {
+			cout << studentEmail << " - is invalid\n";
+
+		};
+	};
+
+	cout << endl;
+};
+
+
+// Prints all students by degree given in argument
+void Roster::printByDegreeProgram(DegreeProgram degreeProgram) {
+	
+	// Finding which degreeProgram was given in argument
+	string degree;
+
+	if (degreeProgram == SECURITY) {
+		degree = "SECURITY";
+	}
+	else if (degreeProgram == NETWORK) {
+		degree = "NETWORK";
+	}
+	else {
+		degree = "SOFTWARE";
+	};
+
+	cout << "Displaying all students in degree program: " << degree << "\n" << endl;
+
+	// If [i] is not a nullptr and it equals the degreeProgram given - print() student
+	for (int i = 0; i < numberOfStudents; ++i) {
+		if ((classRosterArray[i] != nullptr) &&
+			(classRosterArray[i]->getDegreeProgram() == degreeProgram)) {
+
+			classRosterArray[i]->print();
+		};
+	};
+
+	cout << endl;
+};
+
+
+// Default destructor
+Roster::~Roster() {};
+
+
+

@@ -35,6 +35,14 @@ public:
 
 	// Remove function - remove any student by given studentID
 	void remove(std::string studentID);
+	// Prints all students in data table
+	void printAll();
+	// Prints each students average days in a course
+	void printAverageDaysInCourse(std::string studentID);
+	// Print only invalid email address from data table
+	void printInvalidEmails();
+	// Print by degree given in argument
+	void printByDegreeProgram(DegreeProgram degreeProgram);
 };
 
 

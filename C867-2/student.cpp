@@ -4,7 +4,7 @@
 using namespace std;
 
 
-
+// Constructor with all studentData parameters
 Student::Student(
 	std::string studentID,
 	std::string firstName,
@@ -12,9 +12,19 @@ Student::Student(
 	std::string emailAddress,
 	int age,
 	int daysToCompletion[numberOfClasses],
-	DegreeProgram degreeProgram) {
+	DegreeProgram degreeProgram) : 
+	studentID(studentID), firstName(firstName), lastName(lastName),
+	emailAddress(emailAddress), age(age), degreeProgram(degreeProgram) {
 
+	// For loop to set each member value in the daysToCompletion array
+	for (int i = 0; i < numberOfClasses; ++i) {
+		this->daysToCompletion[i] = daysToCompletion[i];
+	}
 };
+
+// Default constructor
+Student::Student() {};
+
 
 // Getters (Accessors)
 string Student::getStudentID() {
@@ -104,3 +114,4 @@ void Student::print() {
 }
 
 
+Student::~Student() {};
