@@ -1,4 +1,4 @@
-# Student Roster Management System
+# Student Management System
 Language: C++
 
 WGU - C867
