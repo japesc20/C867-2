@@ -4,7 +4,6 @@ Language: C++
 WGU - C867
 
 
-
 Classes:
 
 Student Class:
